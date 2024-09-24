@@ -1,10 +1,11 @@
 import './App.css';
-import { ToDoList } from './preparation/useReducerWork';
+import { ChatContainer, TestUseEffect } from './preparation/useEffect';
+import { InputContainer, TimerContainer, VideoContainer } from './preparation/useRef';
 function App() {
     
     return (
         <div>
-            <ToDoList />
+            <TestUseEffect />
         </div>
     );
     

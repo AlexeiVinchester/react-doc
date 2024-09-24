@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 
 const initialTasks = [
     { id: 0, text: 'To update knowledges of useReducer()', done: false },
@@ -39,11 +39,12 @@ const tasksReducer = (state, action) => {
     }
 };
 
-const AddNewTaskContainer = ({ addNewTask }) => {
+const AddNewTaskContainer = () => {
     const [text, setText] = useState('');
+    const dispatch = useContext(TasksDispatch);
 
     const handleClickAddNewTask = () => {
-        addNewTask(text);
+        dispatch({type: 'added', id: nextId++, text: text, done: false});
         setText('');
     };
 
@@ -65,18 +66,21 @@ const AddNewTaskContainer = ({ addNewTask }) => {
     );
 }
 
-const Task = ({ task, deleteTask, editTask }) => {
+const Task = ({ task }) => {
     const [isEditing, setIsEditing] = useState(false);
+    const dispatch = useContext(TasksDispatch);
 
     const handleChangeTaskStatus = (e) => {
-        editTask({
-            ...task,
-            done: e.target.checked
+        dispatch({
+            type: 'edited', task: {
+                ...task,
+                done: e.target.checked
+            }
         })
     };
 
     const handleClickDelete = () => {
-        deleteTask(task.id)
+        dispatch({ type: 'deleted', id: task.id });
     }
 
     let taskContent;
@@ -85,9 +89,12 @@ const Task = ({ task, deleteTask, editTask }) => {
             <>
                 <input
                     value={task.text}
-                    onChange={(e) => editTask({
-                        ...task,
-                        text: e.target.value
+                    onChange={(e) => dispatch({
+                        type: 'edited',
+                        task: {
+                            ...task,
+                            text: e.target.value
+                        }
                     })}
                 />
                 <button onClick={() => setIsEditing(false)}>Edit</button>
@@ -115,38 +122,41 @@ const Task = ({ task, deleteTask, editTask }) => {
     )
 }
 
+
+
+const TasksContext = createContext(null);
+const TasksDispatch = createContext(null);
+
+const TasksList = () => {
+    const tasks = useContext(TasksContext);
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {
+                tasks.map(task => (
+                    <Task
+                        key={task.id}
+                        task={task}
+                    />
+                ))
+            }
+        </div>
+    );
+}
+
 const ToDoList = () => {
     const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
 
-    const handleAdd = (text) => {
-        dispatch({ type: 'added', id: nextId++, text: text, done: false });
-    };
-
-    const handleDelete = (id) => {
-        dispatch({ type: 'deleted', id })
-    };
-
-    const handleEdit = (task) => {
-        dispatch({ type: 'edited', task })
-    };
-
     return (
         <>
-            <h5>Add new task: </h5>
-            <AddNewTaskContainer addNewTask={handleAdd} />
-            <h5>You have to do: </h5>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                {
-                    tasks.map(task => (
-                        <Task
-                            key={task.id}
-                            task={task}
-                            editTask={handleEdit}
-                            deleteTask={handleDelete}
-                        />
-                    ))
-                }
-            </div>
+            <TasksContext.Provider value={tasks}>
+                <TasksDispatch.Provider value={dispatch}>
+                    <h5>Add new task: </h5>
+                    <AddNewTaskContainer />
+                    <h5>You have to do: </h5>
+                    <TasksList />
+                </TasksDispatch.Provider>
+            </TasksContext.Provider>
+
         </>
     );
 }
