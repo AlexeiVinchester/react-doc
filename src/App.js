@@ -1,11 +1,12 @@
 import './App.css';
 import { ChatContainer, TestUseEffect } from './preparation/useEffect';
+import { TestUseId } from './preparation/useId';
 import { InputContainer, TimerContainer, VideoContainer } from './preparation/useRef';
 function App() {
     
     return (
         <div>
-            <TestUseEffect />
+            <TestUseId />
         </div>
     );
     
