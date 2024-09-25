@@ -7,8 +7,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'), {
     identifierPrefix: 'first-app'
 });
 root.render(
- 
     <App />
-  
 );
 

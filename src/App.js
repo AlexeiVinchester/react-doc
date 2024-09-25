@@ -1,12 +1,13 @@
 import './App.css';
-import { ChatContainer, TestUseEffect } from './preparation/useEffect';
-import { TestUseId } from './preparation/useId';
-import { InputContainer, TimerContainer, VideoContainer } from './preparation/useRef';
+import { ControlledInput, UncontrolledInput } from './preparation/UnConComponent';
 function App() {
     
     return (
         <div>
-            <TestUseId />
+            <p>Uncontrolled</p>
+            <UncontrolledInput />
+            <p>Controlled</p>
+            <ControlledInput />
         </div>
     );
     
