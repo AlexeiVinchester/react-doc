@@ -2,6 +2,7 @@ import { useRef, useState } from "react"
 
 // using of uncontrolled component input
 
+
 const UncontrolledInput = () => {
     console.log('new render')
     const ref = useRef(null);
@@ -27,7 +28,7 @@ const ControlledInput = () => {
     }
     return (
         <form>
-            <input onChange={handleChange} placeholder="enter value" />
+            <input value={value} onChange={handleChange} placeholder="enter value" />
             <button onClick={handleClick} >Show</button>
         </form>
     );

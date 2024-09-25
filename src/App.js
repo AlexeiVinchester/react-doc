@@ -1,13 +1,10 @@
 import './App.css';
-import { ControlledInput, UncontrolledInput } from './preparation/UnConComponent';
+import { TestApiWithUseTransition } from './preparation/useTransitionWork';
 function App() {
     
     return (
         <div>
-            <p>Uncontrolled</p>
-            <UncontrolledInput />
-            <p>Controlled</p>
-            <ControlledInput />
+            <TestApiWithUseTransition />
         </div>
     );
     
