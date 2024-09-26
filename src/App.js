@@ -1,10 +1,12 @@
 import './App.css';
-import { TestApiWithUseTransition } from './preparation/useTransitionWork';
+import { Component } from './preparation/useLayoutEffectWork';
+import { ModalWindow } from './preparation/usePortalWotk';
 function App() {
     
     return (
         <div>
-            <TestApiWithUseTransition />
+            
+            <ModalWindow />
         </div>
     );
     
