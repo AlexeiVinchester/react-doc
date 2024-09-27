@@ -1,4 +1,5 @@
 import './App.css';
+import { SyntheticEventComponent } from './preparation/syntheticEventWork';
 import { Component } from './preparation/useLayoutEffectWork';
 import { ModalWindow } from './preparation/usePortalWotk';
 function App() {
@@ -6,7 +7,8 @@ function App() {
     return (
         <div>
             
-            <ModalWindow />
+            <SyntheticEventComponent />
+            {false}
         </div>
     );
     
